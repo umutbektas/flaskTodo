@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <title>Todo App</title>
+</head>
+<body>
+
+<div style="margin-top: 50px;" class="container">
+    <h3>Todo List</h3>
+<hr>
+
+    <form method="post" action="/add" >
+        <div class="form-group">
+                <label for="formGroupExampleInput">Todo Başlık</label>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Başlık yazınız." name="todoTitle">
+                <button style="margin-top: 10px;" type="submit" class="btn btn-primary">Ekle</button>
+        </div>
+    </form>
+   {% if todos %}
+        <table class="table table-info">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Başlık</th>
+                    <th scope="col">Durum</th>
+                    <th scope="col">Durum Güncelle</th>
+                    <th scope="col">Todo Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                    <tr>
+                      <th scope="row">{{ todo.id }}</th>
+                      <td>{{ todo.title }}</td>
+                      <td>{{ "Tamamlandı !" if todo.complete else "Açık !"   }}</td>
+                      <td> <a href="/complete/{{ todo.id }}"><button class="btn btn-primary">Tamamla</button></a></td>
+                      <td> <a href="/delete/{{ todo.id }}"><button class="btn btn-danger">Sil</button></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+   {% else %}
+            <div class="alert alert-warning"> Henüz bir Todo bulunmuyor !</div>
+   {% endif %}
+
+
+
+</div>
+
+
+
+
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
